@@ -2,7 +2,7 @@
 name: Test Action
 
 on:
-  push:
+  commit:
     branches:
       - main
   pull_request:
