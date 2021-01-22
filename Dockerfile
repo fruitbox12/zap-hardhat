@@ -1,5 +1,6 @@
 FROM node:alpine 
 
+
 # Install app dependencies
 #COPY package.json /
 COPY ./package*.json ./
