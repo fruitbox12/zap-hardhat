@@ -1,18 +1,20 @@
+
 name: Pull Request on Branch Push
-on:
-  push:
-    branches-ignore:
-      - staging
-      - launchpad
-      - production
+on: [push]
 jobs:
-  auto-pull-request:
+  pull-request-on-release:
     name: PullRequestAction
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      - name: Derive from branch name
+        run: |
+            # do custom parsing of your code / date to derive a branch from
+            PR_BRANCH_FROM=release-v$(cat VERSION)
+            export "PULL_REQUEST_FROM_BRANCH=${PR_BRANCH_FROM}" >> $GITHUB_ENV
       - name: pull-request-action
         uses: vsoch/pull-request-action@1.0.6
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
-          BRANCH_PREFIX: "feature/"
           PULL_REQUEST_BRANCH: "main"
